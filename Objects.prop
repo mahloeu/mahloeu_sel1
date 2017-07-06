@@ -1,0 +1,14 @@
+# Trip Type
+OneWayId = gi_oneway_label
+RoundTripId = gi_roundtrip_label
+MultiCityId = gi_multicity_label
+FromId = gosuggest_inputSrc
+ToId = gosuggest_inputDest
+section_Tagname = section
+srcCity_Id = react-autosuggest-1-suggestion--0
+dstCity_Id = react-autosuggest-1-suggestion--0
+departDate_xPath = .//*[@id='fare_20170725']
+returnDate_xpath = .//*[@id='fare_20170825'] 
+searchwidget_xpath = .//*[@id='searchWidgetCommon']
+getSetGo_xpath = .//*[@id='gi_search_btn']
+searchResults_xpath = .//*[@id='content']/div/div[2]/div/div[4]/div/div[1]

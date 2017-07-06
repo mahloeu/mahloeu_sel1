@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [TestSuite]">
+  <test name="BrowserType_Chrome(failed)">
+    <classes>
+      <class name="TestCases.TC_001_CheckItenerary">
+        <methods>
+          <include name="closeAUT"/>
+          <include name="BaseclassDriver"/>
+          <include name="TestIteration_001"/>
+        </methods>
+      </class> <!-- TestCases.TC_001_CheckItenerary -->
+    </classes>
+  </test> <!-- BrowserType_Chrome(failed) -->
+</suite> <!-- Failed suite [TestSuite] -->
