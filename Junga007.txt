@@ -1,1 +1,180 @@
-test new file
+SapaaduReady
+Elivaal
+
+/**
+ * 
+ */
+package UserInterface;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import Service.SapaaduReadyImpl;
+
+public class JavaBasicMain {
+
+	public static void main(String[] args) {
+		int i = 0;
+
+		List<Order> orderList = new ArrayList();
+
+		Scanner sc = new Scanner(System.in);
+		Order order = new Order();
+		System.out.println("Please enter name:");
+		order.setName(sc.nextLine());
+		System.out.println("Please enter emailId:");
+		order.setEmailId(sc.nextLine());
+		System.out.println("Please enter mobile no:");
+		order.setMobileNo(sc.nextLong());
+		System.out.println("Please enter address:");
+		order.setAddress(sc.nextLine());
+		sc.nextLine();
+		
+		do {
+
+			order.getName();
+			order.getEmailId();
+			order.getMobileNo();
+			order.getAddress();
+			System.out.println("Please enter order Type:");
+			order.setOrderType(sc.nextLine());
+			System.out.println("Please enter menu:");
+			order.setMenu(sc.nextLine());
+			System.out.println("Do you need to Continue the order ?");
+
+			String confirmtion = sc.nextLine();
+			int orderVal = 1;
+
+			if (i != 1) {
+				SapaaduReadyImpl orderimpl = new SapaaduReadyImpl();
+				orderVal = orderimpl.order(order);
+
+			}
+
+			if (orderVal > 0) {
+				orderList.add(order);
+				String orderConfirmation = confirmtion.toUpperCase();
+				if (orderConfirmation.equalsIgnoreCase("YES")) {
+					i = 1;
+					order = new Order();
+				} else {
+					i = 0;
+					for (int j = 0; j < orderList.size(); j++) {
+						order.setOrderId(j + 1);
+						System.out.println("Order Number:" + order.getOrderId());
+						System.out.println(orderList.get(j).orderType);
+						System.out.println(orderList.get(j).menu);
+					}
+				}
+			}
+
+		} while (i == 1);
+
+		System.out.println("total Order :" + order.getOrderId());
+		sc.close();
+	}
+
+}
+
+/**
+ * 
+ */
+
+package Elivaal;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ElivaalElement {
+
+	public boolean ElivaalEmailId(String emailId) throws Exception {
+		{
+			Pattern emailIdPattern = Pattern.compile(".+[(@infosys.com)|(@gmail.com)]$");
+			Matcher emailIdMatcher = emailIdPattern.matcher(emailId);
+
+			if (emailIdMatcher.matches()) {
+				return true;
+			} else {
+				throw new Exception("Invalid EmailID");
+			}
+		}
+
+	}
+
+	public boolean ElivaalName(String name) throws Exception {
+		{
+			Pattern namePattern = Pattern.compile("^[a-zA-Z ]+$");
+			Matcher nameMatcher = namePattern.matcher(name);
+
+			if (nameMatcher.matches()) {
+				return true;
+			} else {
+				throw new Exception("Invalid Name");
+			}
+		}
+
+	}
+
+	public boolean ElivaalMobileNo(long mobileNo) throws Exception {
+		{
+			String mobileNum = Long.toString(mobileNo);
+			Pattern mobilePattern = Pattern.compile("[789]\\d{9}$");
+			Matcher mobileMatcher = mobilePattern.matcher(mobileNum);
+
+			if (mobileMatcher.matches()) {
+				return true;
+			} else {
+				throw new Exception("Invalid Mobile Number");
+			}
+
+		}
+	}
+}
+
+
+/**
+ * 
+ */
+package Service;
+
+import UserInterface.Order;
+
+
+public interface SaapaduReady {
+	public int order(Order ord);
+
+}
+
+/**
+ * 
+ */
+package Service;
+
+import UserInterface.Order;
+import Validation.ElivaalElement;
+
+public class SaapaduReadyImpl implements SaapaduReady {
+
+	@Override
+	public int order(Order ord) {
+
+		ElivaalElement userInputValidation = new ElivaalElement();
+
+		try {
+			boolean nameValidation = userInputValidation.ElivaalName(ord.getName());
+			boolean emailIdValidation = userInputValidation.ElivaalEmailId(ord.getEmailId());
+			boolean mobileNoValidation = userInputValidation.ElivaalMobileNo(ord.getMobileNo());
+			if(nameValidation && emailIdValidation && mobileNoValidation){
+				return 1;		
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
+}
+
