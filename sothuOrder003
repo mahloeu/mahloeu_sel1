@@ -1,0 +1,178 @@
+soru
+Eli
+
+/**
+ * 
+ */
+package Service;
+
+import UserInterface.JavaBasicMain;
+import UserInterface.Order;
+import Validation.EliElement;
+
+/**
+ * @author Loga
+ *
+ */
+public class soruImpl implements soru {
+
+	@Override
+	public Integer order(Order ord) {
+
+		EliElement userInputValidation = new EliElement();
+
+		try {
+			userInputValidation.EliName(ord.getName());
+			userInputValidation.EliEmailId(ord.getEmailId());
+			userInputValidation.EliMobileNo(ord.getMobileNo());
+			JavaBasicMain.orderList.add(ord);
+			int val = JavaBasicMain.orderList.size();
+
+			for (int i = 0; i < val; i++) {
+
+				System.out.println("Order Number:" + (i + 1));
+				System.out.println(JavaBasicMain.orderList.get(i).getOrderType());
+				System.out.println(JavaBasicMain.orderList.get(i).getMenu());
+			}
+
+			return val;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+
+			return 0;
+		}
+
+	}
+
+}
+
+package UserInterface;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import Service.soruImpl;
+
+public class JavaBasicMain {
+
+	public static List<Order> orderList;
+
+	public static void main(String[] args) {
+		int i = 0;
+
+		orderList = new ArrayList();
+
+		Scanner sc = new Scanner(System.in);
+		Order order = new Order();
+
+		System.out.println("Please enter the name:");
+		order.setName(sc.nextLine());
+		System.out.println("Please enter emailId:");
+		order.setEmailId(sc.nextLine());
+		System.out.println("Please enter mobile no:");
+		order.setMobileNo(sc.nextLong());
+		System.out.println("Please enter address:");
+		order.setAddress(sc.nextLine());
+		order.setAddress(sc.nextLine());
+
+		System.out.println("Please enter OrderType::");
+		order.setOrderType(sc.nextLine());
+		System.out.println("Please enter the Menu:");
+		order.setMenu(sc.nextLine());
+
+		soruImpl orderimpl = new soruImpl();
+		int orderVal = orderimpl.order(order);
+
+		order.setOrderId(orderVal);
+		if (orderVal != 0) {
+
+		}
+		do {
+
+			System.out.println("Do you need to Continue the order ?");
+			String confirmtion = sc.nextLine();
+			String orderConfirmation = confirmtion.toUpperCase();
+			if (orderConfirmation.equalsIgnoreCase("YES")) {
+
+				i = 1;
+				order = new Order();
+
+				order.setAddress(orderList.get(0).getAddress());
+				order.setEmailId(orderList.get(0).getEmailId());
+				order.setMobileNo(orderList.get(0).getMobileNo());
+				order.setName(orderList.get(0).getName());
+
+				System.out.println("Please enter OrderType::");
+				order.setOrderType(sc.nextLine());
+				System.out.println("Please enter the Menu:");
+				order.setMenu(sc.nextLine());
+
+				orderVal = orderimpl.order(order);
+				order.setOrderId(orderVal);
+
+			} else if (orderConfirmation.equalsIgnoreCase("NO")) {
+				i = 0;
+				System.out.println("Thanks!");
+			}
+
+		} while (i == 1);
+
+		System.out.println("total Order :" + order.getOrderId());
+		sc.close();
+	}
+
+}
+
+package Validation;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class EliElement {
+
+	public boolean EliEmailId(String emailId) throws Exception {
+		{
+			Pattern emailIdPattern = Pattern.compile(".+[(@infosys.com)|(@gmail.com)]$");
+			Matcher emailIdMatcher = emailIdPattern.matcher(emailId);
+
+			if (emailIdMatcher.matches()) {
+				return true;
+			} else {
+				throw new Exception("Invalid EmailID");
+			}
+		}
+
+	}
+
+	public boolean EliName(String name) throws Exception {
+		{
+			Pattern namePattern = Pattern.compile("([a-zA-Z]+\\s?)+\\.?");
+			Matcher nameMatcher = namePattern.matcher(name);
+
+			if (nameMatcher.matches()) {
+				return true;
+			} else {
+				throw new Exception("Invalid Name");
+			}
+		}
+
+	}
+
+	public boolean EliMobileNo(long mobileNo) throws Exception {
+		{
+			String mobileNum = Long.toString(mobileNo);
+			Pattern mobilePattern = Pattern.compile("[789]\\d{9}$");
+			Matcher mobileMatcher = mobilePattern.matcher(mobileNum);
+
+			if (mobileMatcher.matches()) {
+				return true;
+			} else {
+				throw new Exception("Invalid Mobile Number");
+			}
+
+		}
+	}
+}
