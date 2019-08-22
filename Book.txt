@@ -1,1 +1,24 @@
-
+ToDo Auto-generated method stub
+try1
+Buf feredReader br new BufferedReader (new InputstreamfRe ads(System. in)1;
+display0;
+ExtendAbstract ea = new Extendabstract0:
+String type br.readLine(0:
+if (Integer.parseInt ( type)1)
+ea.getALLNomi nations0
+if (Integer .parseInt ( type) 2)
+System. out.println(Enter the name of the series);
+String name br.readLane ();
+SeriesBean sb ea.getNomm nation (name)
+if (sbl-nulL)
+sb.getName () ):
+-getNom natedDate());
+System. out.println("Name of the ser1es
+System. out.printLn("Publushed Date
+System. out-println(Rating5
+System. out.printtntpub lac omments
+System. 0ut.println(sb.getRevi ews (0)
+sb.getRatings()
+the splling")
+e
+throw ntw ExceptionMatch not found Ple
